@@ -2,7 +2,7 @@ from contact import Contact
 import json
 import os
 
-def ask_information():
+def input_contact_data():
     print("Please enter the contact data:")
     name = input("Name: ")
     last_name = input("Last name: ")
@@ -21,8 +21,19 @@ def ask_information():
             print("Please enter a valid email.")
     return name,last_name,phone_number,email
 
-def add_contact():
-    name,last_name,phone_number,email = ask_information()
+def is_valid_phone(phone_number):
+    return phone_number.isdigit()
+
+def is_valid_email(email):
+    return '@' in email and '.' in email.split('@')[-1]
+
+def add_contact(name,last_name,phone_number,email):
+    if not is_valid_phone(phone_number):
+        return {"status": "error","message": f"Phone number is not valid."}
+    
+    if not is_valid_email(email):
+        return {"status": "error","message": f"Email is not valid."}
+    
     new_contact = Contact(name,last_name,phone_number,email)
     
     if os.path.exists("contacts.json") and os.path.getsize("contacts.json") > 0:

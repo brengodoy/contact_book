@@ -1,4 +1,4 @@
-from contacts_manager import add_contact
+from contacts_manager import add_contact,input_contact_data
 import sys
 
 def show_options():
@@ -19,7 +19,9 @@ def menu():
         except ValueError:
             print("The option entered is not correct.")
         match op:
-            case 1: print(add_contact()["message"])
+            case 1: 
+                name,last_name,phone_number,email = input_contact_data()
+                print(add_contact(name,last_name,phone_number,email)["message"])
             case 2: search_contact()
             case 3: delete_contact()
             case 4: show_all_contacts()
@@ -27,4 +29,5 @@ def menu():
                 print("Goodbye! Thanks for using the contact book 📒✨")
                 sys.exit()
         
-menu()
+if __name__ == "__main__":
+    menu()
