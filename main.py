@@ -1,29 +1,5 @@
-from contact import Contact
-import json
-import sys,os
-
-def add_contact():
-    print("Please enter the name of the contact:")
-    name = input()
-    print("Please enter the last name of the contact:")
-    last_name = input()
-    print("Please enter the phone number of the contact:")
-    phone_number = input()
-    print("Please enter the email of the contact:")
-    email = input()
-    
-    new_contact = Contact(name,last_name,phone_number,email)
-    
-    if os.path.exists("contacts.json") and os.path.getsize("contacts.json") > 0:
-        with open("contacts.json","r") as contacts_file:
-            contacts = json.load(contacts_file)
-    else:
-        contacts = []
-
-    contacts.append(new_contact.__dict__)
-
-    with open("contacts.json","w") as contacts_file:
-        json.dump(contacts,contacts_file,indent=4)
+from contacts_manager import add_contact
+import sys
 
 def show_options():
     print("Please select an option:")
@@ -38,12 +14,17 @@ def menu():
     op = 0
     while True:
         show_options()
-        op = int(input())
+        try:
+            op = int(input())
+        except ValueError:
+            print("The option entered is not correct.")
         match op:
-            case 1: add_contact()
+            case 1: print(add_contact()["message"])
             case 2: search_contact()
             case 3: delete_contact()
             case 4: show_all_contacts()
-            case 5: sys.exit()
+            case 5: 
+                print("Goodbye! Thanks for using the contact book 📒✨")
+                sys.exit()
         
 menu()
