@@ -50,3 +50,28 @@ def add_contact(name,last_name,phone_number,email):
         return {"status":"success","message":"Contact created succesfully!"}
     except Exception as e:
             return {"status": "error","message": f"There was a problem: {str(e)}"}
+        
+def search_contact(contact_data):
+    try:
+        with open("contacts.json","r") as contacts_file:
+            contacts_list = json.load(contacts_file)
+    except Exception as e:
+        print(f"There was a problem while trying to access the JSON file: {str(e)}")
+        return []
+    contact_match = []
+    for contact in contacts_list:
+        if contact["first_name"].lower() == contact_data.lower() or contact["last_name"].lower() == contact_data.lower() or contact["phone_number"] == contact_data:
+            contact_match.append(contact)
+    return contact_match
+
+def show_contacts_found(contact_match):
+    if contact_match:
+        print(f"Contacts that matched with the criteria: {str(contact_match.__len__())}")
+        for index,contact in enumerate(contact_match):
+            print(f"""{str(index+1)}) CONTACT INFO:
+- First name: {contact["first_name"]}
+- Last name: {contact["last_name"]}
+- Phone number: {contact["phone_number"]}
+- Email: {contact["email"]}""")
+    else:
+        print(f'There are no contacts that match with the criteria.')

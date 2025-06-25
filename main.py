@@ -1,4 +1,4 @@
-from contacts_manager import add_contact,input_contact_data
+from contacts_manager import add_contact,input_contact_data,search_contact,show_contacts_found
 import sys
 
 def show_options():
@@ -22,7 +22,10 @@ def menu():
             case 1: 
                 name,last_name,phone_number,email = input_contact_data()
                 print(add_contact(name,last_name,phone_number,email)["message"])
-            case 2: search_contact()
+            case 2:
+                contact_data = input("Which contact are you looking for? You can search them by their first name, last name, or phone number: ") 
+                contact_match = search_contact(contact_data)
+                show_contacts_found(contact_match)
             case 3: delete_contact()
             case 4: show_all_contacts()
             case 5: 
