@@ -72,7 +72,7 @@ def search_in_contacts_list(contacts_list,contact_data):
 
 def show_contacts_found(contact_match):
     if contact_match:
-        print(f"Contacts that matched with the criteria: {str(contact_match.__len__())}")
+        print(f"Contacts that matched with the criteria: {str(len(contact_match))}")
         for index,contact in enumerate(contact_match):
             print(f"""{str(index+1)}) CONTACT INFO:
 - First name: {contact["first_name"]}
@@ -81,3 +81,37 @@ def show_contacts_found(contact_match):
 - Email: {contact["email"]}""")
     else:
         print(f'There are no contacts that match with the criteria.')
+        
+def select_contact_to_delete(contact_match):
+    show_contacts_found(contact_match)
+    if len(contact_match) == 0:
+        return None
+    elif len(contact_match) == 1:
+        return contact_match[0]
+    elif len(contact_match) > 1:
+        while True:
+            try:
+                index = int(input("Which contact do you want to delete? Please enter the numer assigned to the contact: "))
+                if 1 <= index <= len(contact_match):
+                    return contact_match[index - 1]
+                else:
+                    print("Please enter a valid option: ")
+            except ValueError:
+                print("Invalid input. Please enter a number.")
+    
+def delete_contact(contact_to_delete):
+    try:
+        with open("contacts.json",'r') as contacts_file:
+            contacts_list = json.load(contacts_file)
+            op = input("Are you sure you want to delete "+ contact_to_delete["first_name"] + " " + contact_to_delete["last_name"] + "'s contact? [Y/N] ")
+            while op.lower() != 'y' and op.lower() != 'n':
+                op = input("Please enter a valid option: Y/N ")
+            if op.lower() == 'y':
+                contacts_list.remove(contact_to_delete)
+                with open("contacts.json",'w') as contacts_file:
+                    json.dump(contacts_list,contacts_file,indent=4)
+                return {"status":"success","message":"Contact deleted succesfully!"}
+            else:
+                return {"status":"success","message":"Contact was not deleted."}
+    except Exception as e:
+        return {"status": "error","message": f"There was a problem: {str(e)}"}

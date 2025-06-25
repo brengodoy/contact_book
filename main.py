@@ -1,4 +1,4 @@
-from contacts_manager import add_contact,input_contact_data,search_contact,show_contacts_found
+from contacts_manager import add_contact,input_contact_data,search_contact,show_contacts_found,select_contact_to_delete,delete_contact
 import sys
 
 def show_options():
@@ -26,7 +26,12 @@ def menu():
                 contact_data = input("Which contact are you looking for? You can search them by their first name, last name, or phone number: ") 
                 contact_match = search_contact(contact_data)
                 show_contacts_found(contact_match)
-            case 3: delete_contact()
+            case 3: 
+                contact_data = input("Which contact do you want to delete? You can search them by their first name, last name, or phone number: ")
+                contact_match = search_contact(contact_data)
+                contact_to_delete = select_contact_to_delete(contact_match)
+                if contact_to_delete is not None:
+                    print(delete_contact(contact_to_delete)["message"])
             case 4: show_all_contacts()
             case 5: 
                 print("Goodbye! Thanks for using the contact book 📒✨")
