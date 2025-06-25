@@ -58,9 +58,15 @@ def search_contact(contact_data):
     except Exception as e:
         print(f"There was a problem while trying to access the JSON file: {str(e)}")
         return []
+    
+    return search_in_contacts_list(contacts_list,contact_data)
+
+def search_in_contacts_list(contacts_list,contact_data):
     contact_match = []
     for contact in contacts_list:
-        if contact["first_name"].lower() == contact_data.lower() or contact["last_name"].lower() == contact_data.lower() or contact["phone_number"] == contact_data:
+        if (contact["first_name"].lower() == contact_data.lower() or 
+            contact["last_name"].lower() == contact_data.lower() or 
+            contact["phone_number"] == contact_data):
             contact_match.append(contact)
     return contact_match
 
