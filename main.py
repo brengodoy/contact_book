@@ -1,4 +1,4 @@
-from contacts_manager import add_contact,input_contact_data,search_contact,show_contacts_found,select_contact_to_delete,delete_contact
+from contacts_manager import add_contact,input_contact_data,search_contact,show_contacts_found,select_contact_to_delete,delete_contact,show_all_contacts
 import sys
 
 def show_options():

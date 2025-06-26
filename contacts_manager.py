@@ -37,8 +37,7 @@ def add_contact(name,last_name,phone_number,email):
     new_contact = Contact(name,last_name,phone_number,email)
     
     if os.path.exists("contacts.json") and os.path.getsize("contacts.json") > 0:
-        with open("contacts.json","r") as contacts_file:
-            contacts = json.load(contacts_file)
+        contacts = load_contacts_list()
     else:
         contacts = []
 
@@ -53,8 +52,7 @@ def add_contact(name,last_name,phone_number,email):
         
 def search_contact(contact_data):
     try:
-        with open("contacts.json","r") as contacts_file:
-            contacts_list = json.load(contacts_file)
+        contacts_list = load_contacts_list()
     except Exception as e:
         print(f"There was a problem while trying to access the JSON file: {str(e)}")
         return []
@@ -101,17 +99,36 @@ def select_contact_to_delete(contact_match):
     
 def delete_contact(contact_to_delete):
     try:
-        with open("contacts.json",'r') as contacts_file:
-            contacts_list = json.load(contacts_file)
-            op = input("Are you sure you want to delete "+ contact_to_delete["first_name"] + " " + contact_to_delete["last_name"] + "'s contact? [Y/N] ")
-            while op.lower() != 'y' and op.lower() != 'n':
-                op = input("Please enter a valid option: Y/N ")
-            if op.lower() == 'y':
-                contacts_list.remove(contact_to_delete)
-                with open("contacts.json",'w') as contacts_file:
-                    json.dump(contacts_list,contacts_file,indent=4)
-                return {"status":"success","message":"Contact deleted succesfully!"}
-            else:
-                return {"status":"success","message":"Contact was not deleted."}
+        contacts_list = load_contacts_list()
+        op = input("Are you sure you want to delete "+ contact_to_delete["first_name"] + " " + contact_to_delete["last_name"] + "'s contact? [Y/N] ")
+        while op.lower() != 'y' and op.lower() != 'n':
+            op = input("Please enter a valid option: Y/N ")
+        if op.lower() == 'y':
+            contacts_list.remove(contact_to_delete)
+            with open("contacts.json",'w') as contacts_file:
+                json.dump(contacts_list,contacts_file,indent=4)
+            return {"status":"success","message":"Contact deleted succesfully!"}
+        else:
+            return {"status":"success","message":"Contact was not deleted."}
+    except Exception as e:
+        return {"status": "error","message": f"There was a problem: {str(e)}"}
+    
+def load_contacts_list():
+    try:
+        with open('contacts.json','r') as contacts_file:
+            return json.load(contacts_file)
+    except Exception as e:
+        return []
+    
+def show_all_contacts():
+    try:
+        contacts_list = load_contacts_list()
+        for index,contact in enumerate(contacts_list):
+            print(f"""{str(index+1)}) CONTACT INFO:
+- First name: {contact["first_name"]}
+- Last name: {contact["last_name"]}
+- Phone number: {contact["phone_number"]}
+- Email: {contact["email"]}""")
+        return {"status": "success","message": f"Contacts showed successfully."}
     except Exception as e:
         return {"status": "error","message": f"There was a problem: {str(e)}"}
