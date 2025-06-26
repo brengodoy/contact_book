@@ -1,6 +1,7 @@
 from contact import Contact
 import json
 import os
+import pandas as pd
 
 def input_contact_data():
     print("Please enter the contact data:")
@@ -135,5 +136,14 @@ def show_all_contacts():
 - Phone number: {contact["phone_number"]}
 - Email: {contact["email"]}""")
         return {"status": "success","message": f"Contacts showed successfully."}
+    except Exception as e:
+        return {"status": "error","message": f"There was a problem: {str(e)}"}
+    
+def export_contacts():
+    try:
+        contacts_list = load_contacts_list()
+        df = pd.DataFrame(contacts_list)
+        df.to_csv('datos.csv', index=False)
+        return {"status": "success","message": f"Data exported successfully."}
     except Exception as e:
         return {"status": "error","message": f"There was a problem: {str(e)}"}

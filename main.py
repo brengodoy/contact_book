@@ -1,4 +1,4 @@
-from contacts_manager import add_contact,input_contact_data,search_contact,show_contacts_found,select_contact_to_delete,delete_contact,show_all_contacts,ask_for_confirmation
+from contacts_manager import add_contact,input_contact_data,search_contact,show_contacts_found,select_contact_to_delete,delete_contact,show_all_contacts,ask_for_confirmation,export_contacts
 import sys
 
 def show_options():
@@ -7,7 +7,8 @@ def show_options():
     print("2) Search contact")
     print("3) Delete contact")
     print("4) Show all contacts")
-    print("5) Exit")
+    print("5) Export contacts as Excel")
+    print("6) Exit")
     
 def menu():
     print("Welcome to the contact book!")
@@ -37,7 +38,8 @@ def menu():
                     else:
                         print("Contact was not deleted.")
             case 4: show_all_contacts()
-            case 5: 
+            case 5: print(export_contacts()["message"])
+            case 6: 
                 print("Goodbye! Thanks for using the contact book 📒✨")
                 sys.exit()
         
