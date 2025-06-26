@@ -7,17 +7,19 @@ def input_contact_data():
     name = input("Name: ")
     last_name = input("Last name: ")
     while True:
-        try:
-            phone_number = input("Phone number: ")
-            int(phone_number)
-            break
-        except ValueError:
+        phone_number = input("Phone number: ")
+        if is_valid_phone(phone_number):
+            if search_contact(phone_number) == []:
+                break
+            else:
+                print("That phone number already exists.")
+        else:
             print("The phone number must contain only numbers.")
-    email = None
-    while email is None:
+    while True:
         email = input("Email: ")
-        if '@' not in email:
-            email = None
+        if is_valid_email(email):
+            break
+        else:
             print("Please enter a valid email.")
     return name,last_name,phone_number,email
 
