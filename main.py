@@ -1,4 +1,4 @@
-from contacts_manager import add_contact,input_contact_data,search_contact,show_contacts_found,select_contact_to_delete,delete_contact,show_all_contacts
+from contacts_manager import add_contact,input_contact_data,search_contact,show_contacts_found,select_contact_to_delete,delete_contact,show_all_contacts,ask_for_confirmation
 import sys
 
 def show_options():
@@ -31,7 +31,11 @@ def menu():
                 contact_match = search_contact(contact_data)
                 contact_to_delete = select_contact_to_delete(contact_match)
                 if contact_to_delete is not None:
-                    print(delete_contact(contact_to_delete)["message"])
+                    op = ask_for_confirmation(contact_to_delete)
+                    if op.lower() == 'y':
+                        print(delete_contact(contact_to_delete)["message"])
+                    else:
+                        print("Contact was not deleted.")
             case 4: show_all_contacts()
             case 5: 
                 print("Goodbye! Thanks for using the contact book 📒✨")

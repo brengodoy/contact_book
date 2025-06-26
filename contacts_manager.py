@@ -96,20 +96,23 @@ def select_contact_to_delete(contact_match):
                     print("Please enter a valid option: ")
             except ValueError:
                 print("Invalid input. Please enter a number.")
+
+def ask_for_confirmation(contact):
+    op = input("Are you sure you want to delete "+ contact["first_name"] + " " + contact["last_name"] + "'s contact? [Y/N] ")
+    while op.lower() != 'y' and op.lower() != 'n':
+        op = input("Please enter a valid option: Y/N ")
+    return op
     
 def delete_contact(contact_to_delete):
     try:
         contacts_list = load_contacts_list()
-        op = input("Are you sure you want to delete "+ contact_to_delete["first_name"] + " " + contact_to_delete["last_name"] + "'s contact? [Y/N] ")
-        while op.lower() != 'y' and op.lower() != 'n':
-            op = input("Please enter a valid option: Y/N ")
-        if op.lower() == 'y':
+        if contact_to_delete in contacts_list:
             contacts_list.remove(contact_to_delete)
             with open("contacts.json",'w') as contacts_file:
                 json.dump(contacts_list,contacts_file,indent=4)
             return {"status":"success","message":"Contact deleted succesfully!"}
         else:
-            return {"status":"success","message":"Contact was not deleted."}
+            return {"status": "error","message": f"Contact not found."}    
     except Exception as e:
         return {"status": "error","message": f"There was a problem: {str(e)}"}
     
