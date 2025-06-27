@@ -83,7 +83,7 @@ def show_contacts_found(contact_match):
     else:
         print(f'There are no contacts that match with the criteria.')
         
-def select_contact_to_delete(contact_match):
+def select_contact(contact_match):
     show_contacts_found(contact_match)
     if len(contact_match) == 0:
         return None
@@ -92,7 +92,7 @@ def select_contact_to_delete(contact_match):
     elif len(contact_match) > 1:
         while True:
             try:
-                index = int(input("Which contact do you want to delete? Please enter the numer assigned to the contact: "))
+                index = int(input("Which contact do you want to select? Please enter the numer assigned to the contact: "))
                 if 1 <= index <= len(contact_match):
                     return contact_match[index - 1]
                 else:
@@ -145,5 +145,41 @@ def export_contacts():
         df = pd.DataFrame(contacts_list)
         df.to_csv('datos.csv', index=False)
         return {"status": "success","message": f"Data exported successfully."}
+    except Exception as e:
+        return {"status": "error","message": f"There was a problem: {str(e)}"}
+
+def select_data_to_edit():
+    op = input("Which data do you want to edit from this contact? [FN/LN/P/E] ")
+    while True:
+        match op.upper():
+            case "FN": 
+                data_to_edit = f"first_name"
+                break
+            case "LN": 
+                data_to_edit = f"last_name"
+                break
+            case "P": 
+                data_to_edit = f"phone_number"
+                break
+            case "E": 
+                data_to_edit = f"email"
+                break
+        op = input("Please enter a valid option: ")
+    new_data = input("Please enter the new data: ")
+    while True:
+        if ((op.upper() == "P" and is_valid_phone(new_data)) or 
+            (op.upper() == "E" and is_valid_email(new_data)) or 
+            op.upper() == "FN" or op.upper() == "LN"):
+            break
+        else:
+            new_data = input("Please enter the new data: ")
+    return data_to_edit,new_data
+    
+def edit_contact(contact,data_to_edit,new_data):
+    try:
+        delete_contact(contact)
+        contact[data_to_edit] = new_data
+        add_contact(contact["first_name"],contact["last_name"],contact["phone_number"],contact["email"])
+        return {"status": "success","message": f"Contact edited successfully."}
     except Exception as e:
         return {"status": "error","message": f"There was a problem: {str(e)}"}
