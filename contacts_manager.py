@@ -177,9 +177,17 @@ def select_data_to_edit():
     
 def edit_contact(contact,data_to_edit,new_data):
     try:
-        delete_contact(contact)
-        contact[data_to_edit] = new_data
-        add_contact(contact["first_name"],contact["last_name"],contact["phone_number"],contact["email"])
+        contacts_list = load_contacts_list()
+        for c in contacts_list:
+            if c == contact:
+                c[data_to_edit] = new_data
+                break
+        else:
+            return {"status": "error", "message": "Contact not found."}
+        
+        with open("contacts.json", 'w') as contacts_file:
+            json.dump(contacts_list, contacts_file, indent=4)
+        
         return {"status": "success","message": f"Contact edited successfully."}
     except Exception as e:
         return {"status": "error","message": f"There was a problem: {str(e)}"}

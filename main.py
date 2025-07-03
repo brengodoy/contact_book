@@ -32,7 +32,7 @@ def menu():
                 contact_data = input("Which contact do you want to edit? You can search them by their first name, last name, or phone number: ")
                 contact_match = search_contact(contact_data)
                 contact_to_edit = select_contact(contact_match)
-                if contact_match != []:
+                if contact_to_edit is not None:
                     while True:
                         data_to_edit,new_data = select_data_to_edit()
                         edit_contact(contact_to_edit,data_to_edit,new_data)
