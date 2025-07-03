@@ -180,8 +180,11 @@ def edit_contact(contact,data_to_edit,new_data):
         contacts_list = load_contacts_list()
         for c in contacts_list:
             if c == contact:
-                c[data_to_edit] = new_data
-                break
+                if data_to_edit in c:
+                    c[data_to_edit] = new_data
+                    break
+                else:
+                    return {"status": "error", "message": f"'{data_to_edit}' is not a valid field."}
         else:
             return {"status": "error", "message": "Contact not found."}
         

@@ -1,6 +1,6 @@
 import sys,os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from contacts_manager import delete_contact
+from contacts_manager import delete_contact,add_contact
 
 def test_delete_existing_contact():
     contact = {
@@ -9,6 +9,7 @@ def test_delete_existing_contact():
         "phone_number": "75298554",
         "email": "idaantinori@example.com"
     }
+    add_contact("Ida","Antinori","75298554","idaantinori@example.com")
     assert delete_contact(contact)["status"] == "success"
     
 def test_delete_non_existing_contact():
