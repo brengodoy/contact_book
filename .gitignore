@@ -1,4 +1,6 @@
 contacts.json
-__pycache__/
+__pycache__
 *.pyc
-datos.csv
+contacts.csv
+.pytest_cache
+contacts_backup*

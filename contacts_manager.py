@@ -143,7 +143,7 @@ def export_contacts():
     try:
         contacts_list = load_contacts_list()
         df = pd.DataFrame(contacts_list)
-        df.to_csv('datos.csv', index=False)
+        df.to_csv('contacts.csv', index=False)
         return {"status": "success","message": f"Data exported successfully."}
     except Exception as e:
         return {"status": "error","message": f"There was a problem: {str(e)}"}

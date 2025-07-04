@@ -1,5 +1,8 @@
 from contacts_manager import add_contact,input_contact_data,search_contact,show_contacts_found,select_contact,delete_contact,show_all_contacts,ask_for_confirmation,export_contacts,select_data_to_edit,edit_contact
 import sys
+import threading
+import schedule
+import time
 
 def show_options():
     print("Please select an option:")
@@ -35,8 +38,18 @@ def find_contact_flow(action):
     contact_match = search_contact(contact_data)
     return select_contact(contact_match)
 
+def run_backup_scheduler():
+    from auto_save import run_scheduler
+    run_scheduler()
+
+def start_backup_thread():
+    backup_thread = threading.Thread(target=run_backup_scheduler)
+    backup_thread.daemon = True
+    backup_thread.start()
+
 def menu():
     print("Welcome to the contact book!")
+    start_backup_thread()
     op = 0
     while True:
         show_options()
