@@ -13,6 +13,9 @@ This project is a command-line contact book that allows you to:
 - 🗑️ Delete contacts
 - 📂 View all contacts
 - 📤 Export contacts to Excel (.csv)
+- 💾 Automatically backup your contacts every 5 minutes
+- 📧 Send backups via email automatically
+- 📝 Log every backup, email sent, and error in a detailed activity log
 
 Everything is fully interactive and intuitive via a simple menu.
 
@@ -20,7 +23,7 @@ Everything is fully interactive and intuitive via a simple menu.
 
 ## 🛠️ Technologies Used
 - Python 3.10.11
-- Standard libraries: `csv`, `sys`, `json`, `os`, `pandas`
+- Standard libraries: `csv`, `sys`, `json`, `os`, `pandas`, `smtplib`, `email`, `schedule`
 - `pytest` for unit testing
 
 ---
@@ -29,16 +32,21 @@ Everything is fully interactive and intuitive via a simple menu.
 ```
 contact_book/
 │
-├── contact.py # Contact class definition
-├── contacts_manager.py # Core logic for managing contacts
-├── main.py # Interactive menu
-├── contacts.csv # Contacts storage file
-├── tests/ # Unit tests folder
+├── contact.py               # Contact class definition
+├── contacts_manager.py      # Core logic for managing contacts
+├── main.py                  # Interactive menu
+├── auto_save.py             # Automatic backup and email scheduler
+├── send_backup_email.py     # Handles sending backups via email
+├── activity_log.py          # Logs activities and errors
+├── contacts.csv             # Contacts storage file
+├── backups/                 # Folder for JSON backups
+├── activity_log.txt         # Activity log file
+├── tests/                   # Unit tests folder
 │ ├── test_add_contact.py
 │ ├── test_delete_contact.py
 │ ├── test_edit_contact.py
 │ └── test_search_contact.py
-└── README.md # Project documentation (this file)
+└── README.md                # Project documentation (this file)
 ```
 
 ---
@@ -73,6 +81,9 @@ pytest
 - Automated testing ✔️
 - Excel export feature 📊
 - Easy to scale 🚀
+- Auto backup every 5 minutes ⏳
+- Automatic email sending with latest backup 📧
+- Activity logging for backups, emails, and errors 📝
 
 ---
 
