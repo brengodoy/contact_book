@@ -1,0 +1,16 @@
+backup created at: 2025-07-07_13-07-31
+email sent at: 2025/07/07 13:07:33
+backup created at: 2025-07-07_13-07-43
+email sent at: 2025/07/07 13:07:44
+backup created at: 2025-07-07_13-07-54
+email sent at: 2025/07/07 13:07:56
+backup created at: 2025/07/07 13:12:31
+email sent at: 2025/07/07 13:12:33
+backup created at: 2025/07/07 13:12:43
+email sent at: 2025/07/07 13:12:45
+backup created at: 2025/07/07 13:12:55
+backup created at: 2025/07/07 13:17:57
+email sent at: 2025/07/07 13:17:58
+Backup process started at: 2025/07/07 13:47:57.
+Backup created at: 2025/07/07 13:47:57.
+Email sent at: 2025/07/07 13:47:58.

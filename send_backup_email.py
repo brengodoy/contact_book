@@ -45,7 +45,7 @@ def send_backup_email(backup_file : str) -> None:
         server.starttls()
         server.login(sender_email, password)
         server.sendmail(sender_email, receiver_email, message.as_string())
-        print("Correo enviado con éxito.")
+        #print("Correo enviado con éxito.")
     except Exception as e:
         print(f"Error al enviar el correo: {e}")
     finally:
