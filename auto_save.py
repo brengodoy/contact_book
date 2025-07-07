@@ -4,6 +4,7 @@ import os
 import json
 from datetime import datetime
 from contacts_manager import load_contacts_list
+from send_backup_email import send_backup_email
 
 def get_file_name() -> str:
     now = datetime.now()
@@ -19,8 +20,13 @@ def save_contacts_backup():
     contacts_list = load_contacts_list()
     file_name = get_file_name()
     clear_backups_folder()
-    with open(os.path.join(BACKUP_DIR, f'contacts_backup_{file_name}.json'),'w') as backup_file:
-       json.dump(contacts_list,backup_file,indent=4)
+    try:
+        with open(os.path.join(BACKUP_DIR, f'contacts_backup_{file_name}.json'),'w') as backup_file:
+            json.dump(contacts_list,backup_file,indent=4)
+            print(f'Backup {file_name} saved successfully.')
+        send_backup_email(os.path.join(BACKUP_DIR, f'contacts_backup_{file_name}.json'))
+    except Exception as e:
+        print(f'Error saving backup: {e}')
 
 def clear_backups_folder():
     for filename in os.listdir(BACKUP_DIR):

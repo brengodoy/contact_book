@@ -1,8 +1,6 @@
 from contacts_manager import add_contact,input_contact_data,search_contact,show_contacts_found,select_contact,delete_contact,show_all_contacts,ask_for_confirmation,export_contacts,select_data_to_edit,edit_contact
 import sys
 import threading
-import schedule
-import time
 
 def show_options():
     print("Please select an option:")

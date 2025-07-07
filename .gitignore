@@ -4,3 +4,4 @@ __pycache__
 contacts.csv
 .pytest_cache
 contacts_backup*
+.env
